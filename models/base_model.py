@@ -6,7 +6,7 @@ This is a BaseModel module for base class
 """
 
 
-import models 
+import models
 import uuid
 from datetime import datetime
 
