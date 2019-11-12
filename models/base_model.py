@@ -10,6 +10,7 @@ import models
 import uuid
 from datetime import datetime
 
+
 class BaseModel:
     """Represents a base class"""
 
@@ -31,12 +32,13 @@ class BaseModel:
         if "updated_at" not in kwargs:
             self.updated_at = datetime.now()
         if not kwargs or len(kwargs) == 0:
-            models.storage.new(self) 
+            models.storage.new(self)
 
     def __str__(self):
         """ overwrite string special method """
-        out = "[{}] ({}) {}".format(type(self).__name__, self.id, self.__dict__)
-        return out  
+        out = "[{}] ({}) {}".format(type(self).__name__, self.id,
+                                    self.__dict__)
+        return out
 
     def save(self):
         """Updates 'updated_at' with current datetime"""
