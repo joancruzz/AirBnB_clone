@@ -32,7 +32,7 @@ class FileStorage:
         """ serializes object """
         with open(self.__file_path, 'w') as myFile:
             json.dump({k: v.to_dict() for k, v in self.__objects.items()},
-                      myFile) 
+                      myFile)
 
     def reload(self):
         """ deserializes a json file """
@@ -56,4 +56,3 @@ class FileStorage:
                     self.__objects[k] = Review(**v)
         except:
             pass
-
