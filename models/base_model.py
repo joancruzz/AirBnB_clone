@@ -1,54 +1,48 @@
 #!/usr/bin/python3
+"""base Module for the AirBnB clone"""
 
 
-"""
-This is a BaseModel module for base class
-"""
-
-
-import models
 import uuid
 from datetime import datetime
+import models
 
 
 class BaseModel:
-    """Represents a base class"""
+    """defines all common attributes/methods
+    for other classes in the project"""
 
     def __init__(self, *args, **kwargs):
-        """ initialize an instance potentially with a dictionary argument"""
+        """inicializating BaseModel instance"""
+
         if kwargs and len(kwargs) > 0:
-            for k, v in kwargs.items():
-                if k == "created_at" or k == "updated_at":
-                    setattr(self, k, datetime.strptime
-                            (v, "%Y-%m-%dT%H:%M:%S.%f"))
-                elif k == "__class__":
-                    pass
-                else:
-                    setattr(self, k, v)
-        if "id" not in kwargs:
+            for key, value in kwargs.items():
+                if key == 'created_at' or key == 'updated_at':
+                    value = datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%f')
+                    setattr(self, key, value)
+                elif key != '__class__':
+                    setattr(self, key, value)
+        else:
             self.id = str(uuid.uuid4())
-        if "created_at" not in kwargs:
             self.created_at = datetime.now()
-        if "updated_at" not in kwargs:
             self.updated_at = datetime.now()
-        if not kwargs or len(kwargs) == 0:
             models.storage.new(self)
 
     def __str__(self):
-        """ overwrite string special method """
-        out = "[{}] ({}) {}".format(type(self).__name__, self.id,
-                                    self.__dict__)
-        return out
+        """Return string representation of BaseModel class"""
+
+        return "[{}] ({}) {}".\
+            format(type(self).__name__, self.id, self.__dict__)
 
     def save(self):
-        """Updates 'updated_at' with current datetime"""
+        """Update the updated_at attribute with new"""
+
         self.updated_at = datetime.now()
         models.storage.save()
 
     def to_dict(self):
-        """Returns a dict containing all keys/values of __dict__"""
-        new_dict = self.__dict__.copy()
-        new_dict['__class__'] = self.__class__.__name__
-        new_dict['updated_at'] = self.updated_at.isoformat()
-        new_dict['created_at'] = self.created_at.isoformat()
-        return new_dict
+        """Return a dictionary containing keys/values of __dict__."""
+        my_dict = self.__dict__.copy()
+        my_dict["__class__"] = self.__class__.__name__
+        my_dict['created_at'] = self.created_at.isoformat()
+        my_dict['updated_at'] = self.updated_at.isoformat()
+        return my_dict
