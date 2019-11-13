@@ -42,6 +42,8 @@ class test_file_storage_instantiation(unittest.TestCase):
         a = FileStorage()
         with self.assertRaises(AttributeError):
             a.objects
+
+
 class test_file_storage_methods(unittest.TestCase):
     """ define unit test for testing file storage all method """
 
