@@ -14,6 +14,7 @@ from datetime import datetime
 from time import sleep
 import models
 import os
+import pep8
 
 
 class test_file_storage_instantiation(unittest.TestCase):
@@ -148,6 +149,11 @@ class test_file_storage_methods(unittest.TestCase):
         self.assertIn(eid, FileStorage._FileStorage__objects)
         self.assertIn(fid, FileStorage._FileStorage__objects)
         self.assertIn(gid, FileStorage._FileStorage__objects)
+
+    def test_pep8(self):
+        style_test = pep8.StyleGuide(quiet=True).\
+            check_files(['models/engine/file_storage.py'])
+        self.assertEqual(style_test.total_errors, 0, "Fix pep8 errors")
 
 
 if __name__ == '__main__':
